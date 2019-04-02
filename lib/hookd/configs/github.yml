@@ -1,0 +1,8 @@
+---
+- header:
+    x_github_event: pull_request
+  action: run_template_script
+
+- header:
+    x_github_event: push
+  action: run_template_script
