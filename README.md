@@ -50,15 +50,15 @@ Build and run a docker continer to serve webhooks
 
 Build:
 
-      $ docker build -t hooker
+      $ docker build -t hookd .
 
 Debug:
 
-      $ docker run -it hooker sh
+      $ docker run -it hookd sh
 
 Serve:
 
-      $ docker run -it --rm --name=hooker -p 3001:80 hooker
+      $ docker run -it --rm --name=hookd -p 3001:80 hookd
 
 ## Contributing
 
