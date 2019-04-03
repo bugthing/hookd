@@ -32,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 start the hookd server
 
-      $ rackup -p 3000
+      $ bundle exec ./exe/hookd
 
 start ngrok (make note of the *Forwarding* url)
 

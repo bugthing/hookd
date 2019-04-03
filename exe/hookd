@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-require 'rack'
-require 'optparse'
+require "rack"
+require "optparse"
 
-require_relative '../lib/hookd'
+require_relative "../lib/hookd"
 
 options = {}
 port = 3000
-OptionParser.new do |opts|
+OptionParser.new { |opts|
   opts.banner = "Usage: hookd [options]"
 
   opts.on("-s SECRET", "--secret SECRET", "Use secret to verify hooks") do |s|
@@ -25,9 +25,8 @@ OptionParser.new do |opts|
   opts.on("-p N", "--port N", Integer, "Port to start the server on") do |n|
     port = n
   end
+}.parse!
 
-end.parse!
-
-Hookd.configure { |cfg| options.each_pair { |k,v| cfg.send("#{k}=", v) } }
+Hookd.configure { |cfg| options.each_pair { |k, v| cfg.send("#{k}=", v) } }
 puts "Starting Hookd on port #{port} with: #{Hookd.config.to_h}"
 Rack::Server.start(app: Hookd.rack_app, Port: port)

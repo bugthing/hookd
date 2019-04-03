@@ -1,9 +1,9 @@
-require_relative './hookd/version'
-require_relative './hookd/configs'
-require_relative './hookd/hook_match'
-require_relative './hookd/rack_app'
+require_relative "./hookd/version"
+require_relative "./hookd/configs"
+require_relative "./hookd/hook_match"
+require_relative "./hookd/rack_app"
 
-require 'ostruct'
+require "ostruct"
 
 module Hookd
   class Error < StandardError; end
