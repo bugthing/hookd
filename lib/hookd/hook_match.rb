@@ -1,5 +1,3 @@
-require "yaml"
-
 module Hookd
   class HookMatch
     def initialize(config)

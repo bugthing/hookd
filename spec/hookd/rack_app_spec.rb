@@ -1,9 +1,7 @@
-RSpec.describe Hookd do
-  include Rack::Test::Methods
+RSpec.describe Hookd::RackApp do
+  subject(:app) { described_class.new }
 
-  def app
-    Hookd::App
-  end
+  include Rack::Test::Methods
 
   describe "a github webhook request" do
     before do

@@ -4,8 +4,8 @@ module Hookd
   class Configs
     CONFIGS_DIR = File.join(File.dirname(File.expand_path(".", __FILE__)), "configs")
 
-    def initialize(dir = CONFIGS_DIR)
-      @dir = dir
+    def initialize
+      @dir = Hookd.config.config_dir || CONFIGS_DIR
     end
 
     def config_files

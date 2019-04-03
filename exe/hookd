@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'rack'
+require 'optparse'
+
+require_relative '../lib/hookd'
+
+options = {}
+port = 3000
+OptionParser.new do |opts|
+  opts.banner = "Usage: hookd [options]"
+
+  opts.on("-s SECRET", "--secret SECRET", "Use secret to verify hooks") do |s|
+    options[:secret] = s
+  end
+
+  opts.on("-c DIR", "--configdir DIR", "Directory to containing yml config files") do |s|
+    options[:config_dir] = s
+  end
+
+  opts.on("-x DIR", "--scriptdir DIR", "Directory to containing scripts to run") do |s|
+    options[:script_dir] = s
+  end
+
+  opts.on("-p N", "--port N", Integer, "Port to start the server on") do |n|
+    port = n
+  end
+
+end.parse!
+
+Hookd.configure { |cfg| options.each_pair { |k,v| cfg.send("#{k}=", v) } }
+puts "Starting Hookd on port #{port} with: #{Hookd.config.to_h}"
+Rack::Server.start(app: Hookd.rack_app, Port: port)
