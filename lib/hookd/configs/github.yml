@@ -1,7 +1,7 @@
 ---
 - header:
     x_github_event: pull_request
-  action: run_template_script
+  action: no-op
 
 - header:
     x_github_event: push

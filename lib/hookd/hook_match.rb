@@ -1,5 +1,7 @@
 module Hookd
   class HookMatch
+    attr_reader :config
+
     def initialize(config)
       @config = config
     end
@@ -14,7 +16,7 @@ module Hookd
 
     private
 
-    attr_reader :config, :request
+    attr_reader :request
 
     def should_match_headers?
       config.key? :header
