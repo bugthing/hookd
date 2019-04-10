@@ -15,7 +15,7 @@ module Hookd
 
       return [404, {}, ["Not hookd!"]] unless match
 
-      HookAction.new(match.config).take_action
+      HookAction.new(match).take_action
 
       [200, {}, ["hookd!"]]
     end

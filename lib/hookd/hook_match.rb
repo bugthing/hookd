@@ -1,5 +1,7 @@
 module Hookd
   class HookMatch
+    MatchesNotRun = Class.new(StandardError)
+
     attr_reader :config
 
     def initialize(config)
@@ -12,6 +14,11 @@ module Hookd
       return false if should_match_path? && !match_path?
       return false if should_match_json? && !match_json?
       true
+    end
+
+    def request_json
+      raise(MatchesNotRun, "json not available until request matched") unless request
+      @request_json ||= JSON.parse(request.body.read)
     end
 
     private
@@ -43,9 +50,8 @@ module Hookd
     end
 
     def match_json?
-      req_json = JSON.parse(request.body.read)
       conf_json = JSON.parse(JSON.generate(config[:json]))
-      (conf_json.to_a - req_json.to_a).empty?
+      (conf_json.to_a - request_json.to_a).empty?
     end
   end
 end

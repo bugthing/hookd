@@ -3,6 +3,8 @@ require "spec_helper"
 RSpec.describe Hookd::HookMatch do
   subject(:object) { described_class.new config }
 
+  let(:config) { {} }
+
   describe "#match" do
     subject { object.matches? request }
 
@@ -60,6 +62,24 @@ RSpec.describe Hookd::HookMatch do
       context "when the request does not have a matching path" do
         let(:request) { make_request("payload", {}, '{"attr": "", "some": "motmatch"}') }
         it { is_expected.to be false}
+      end
+    end
+  end
+
+  describe "#request_json" do
+    subject { object.request_json }
+
+    it 'raised error is request not matched first' do
+      expect { subject }.to raise_exception Hookd::HookMatch::MatchesNotRun
+    end
+
+    context 'when #matches? has been run before' do
+      before { object.matches? request }
+
+      let(:request) { make_request("payload", {}, '{"body": "is json"}') }
+
+      it "returns a JSON parsed version of the request body" do
+        expect(subject).to eq("body" => "is json")
       end
     end
   end
